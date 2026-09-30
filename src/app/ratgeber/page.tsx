@@ -88,7 +88,7 @@ export default function RatgeberUebersicht() {
         </Container>
       </Section>
 
-      <NotfallBand />
+      <NotfallBand unten="sunk" />
     </>
   );
 }

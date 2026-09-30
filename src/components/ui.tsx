@@ -1,5 +1,5 @@
 import Link from "next/link";
-import type { ReactNode } from "react";
+import type { CSSProperties, ReactNode } from "react";
 import { Phone } from "@phosphor-icons/react/ssr";
 import { site, telHref } from "@/content/site";
 
@@ -46,6 +46,25 @@ export function Section({
   );
 }
 
+/* ── Scroll-Einblendung ─────────────────────────────────────── */
+
+/**
+ * Props für ein Element, das beim Hineinscrollen eingeblendet wird.
+ * `verzoegerung` staffelt Listen, `art` wählt die Richtung.
+ * Mechanik: components/ScrollEffekte.tsx und globals.css.
+ */
+export function reveal(
+  verzoegerung = 0,
+  art: "" | "links" | "rechts" | "zoom" = "",
+): { "data-reveal": string; style?: CSSProperties } {
+  return {
+    "data-reveal": art,
+    style: verzoegerung
+      ? ({ "--d": `${verzoegerung}ms` } as CSSProperties)
+      : undefined,
+  };
+}
+
 /* ── Überschriften ──────────────────────────────────────────── */
 
 export function H2({
@@ -57,6 +76,7 @@ export function H2({
 }) {
   return (
     <h2
+      data-reveal=""
       className={`head text-balance text-[1.5rem] sm:text-[1.75rem] lg:text-[1.95rem] ${className}`}
     >
       {children}
@@ -94,7 +114,7 @@ export function CallButton({
   className = "",
 }: {
   size?: "md" | "xl";
-  variant?: "solid" | "outline" | "onBrand";
+  variant?: "solid" | "outline" | "onBrand" | "hell";
   label?: string;
   className?: string;
 }) {
@@ -107,6 +127,9 @@ export function CallButton({
     outline:
       "border-2 border-brand text-brand hover:bg-brand hover:text-on-brand",
     onBrand: "bg-on-brand text-brand hover:bg-bg",
+    // Auf Fotos: in beiden Farbschemata hell, damit er sich vom
+    // abgedunkelten Bild abhebt.
+    hell: "bg-[#faf7f0] text-[#1a403f] shadow-[0_12px_30px_-10px_rgba(0,0,0,0.6)] hover:bg-white",
   };
   return (
     <a
@@ -133,7 +156,7 @@ export function LinkButton({
 }: {
   href: string;
   children: ReactNode;
-  variant?: "solid" | "outline" | "quiet";
+  variant?: "solid" | "outline" | "quiet" | "hell";
   className?: string;
 }) {
   const variants = {
@@ -141,6 +164,7 @@ export function LinkButton({
     outline:
       "border border-line-strong text-ink hover:border-brand hover:text-brand",
     quiet: "text-brand hover:text-brand-deep underline underline-offset-4",
+    hell: "border border-white/35 text-white hover:border-white hover:bg-white/10",
   };
   return (
     <Link

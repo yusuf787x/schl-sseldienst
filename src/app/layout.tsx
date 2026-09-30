@@ -4,6 +4,7 @@ import "./globals.css";
 import { site } from "@/content/site";
 import { Header, AnrufLeiste } from "@/components/Header";
 import { Footer, Einsatzgebiet } from "@/components/Footer";
+import { ScrollEffekte } from "@/components/ScrollEffekte";
 import { JsonLd, localBusinessSchema } from "@/lib/schema";
 
 /**
@@ -95,7 +96,22 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="de" className={`${head.variable} ${body.variable}`}>
+    <html
+      lang="de"
+      className={`${head.variable} ${body.variable}`}
+      suppressHydrationWarning
+    >
+      <head>
+        {/* Schaltet die Einblend-Effekte frei, bevor gezeichnet wird.
+            Meldet sich ScrollEffekte nicht binnen drei Sekunden (Script
+            blockiert, Netz weg), wird wieder alles sichtbar gemacht. */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html:
+              "(function(d){d.classList.add('js');setTimeout(function(){if(!window.__rv)d.classList.remove('js')},3000)})(document.documentElement)",
+          }}
+        />
+      </head>
       <body className="flex min-h-[100dvh] flex-col antialiased">
         <a
           href="#inhalt"
@@ -115,6 +131,7 @@ export default function RootLayout({
         <div aria-hidden="true" className="h-[4.5rem] sm:hidden" />
         <AnrufLeiste />
 
+        <ScrollEffekte />
         <JsonLd data={localBusinessSchema()} />
       </body>
     </html>
