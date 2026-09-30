@@ -226,7 +226,7 @@ main {
 
   /* Parallaxe: der Wert kommt aus ScrollEffekte.tsx. */
   .parallax {
-    transform: translate3d(0, var(--py, 0px), 0);
+    transform: translate3d(var(--px, 0px), var(--py, 0px), 0);
     will-change: transform;
   }
 

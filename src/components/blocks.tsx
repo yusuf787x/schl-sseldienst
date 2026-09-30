@@ -184,44 +184,17 @@ const schritte = [
   },
 ];
 
-/**
- * `mitFigur`: Auf der Startseite ragt rechts oben eine Hand mit
- * Akkuschrauber ins Bild. Der Kopfbereich hält dann rechts Platz frei
- * und nimmt den Notfallhinweis mit nach oben, damit nichts überlappt.
- */
-export function Ablauf({ mitFigur = false }: { mitFigur?: boolean }) {
-  const hinweis = (
-    <p
-      {...reveal(150)}
-      className={`max-w-[64ch] border-l-2 border-brand pl-5 text-[0.98rem] leading-relaxed text-ink ${
-        mitFigur ? "mt-6" : "mt-10"
-      }`}
-    >
-      Wenn ein Kind, ein Tier oder eine hilfebedürftige Person hinter der Tür
-      ist oder der Herd läuft, sagen Sie uns das bitte im ersten Satz. Solche
-      Einsätze ziehen wir vor.
-    </p>
-  );
-
+export function Ablauf() {
   return (
     <Container>
-      <div
-        className={
-          mitFigur ? "lg:min-h-[19rem] lg:max-w-[52ch]" : "max-w-[46ch]"
-        }
-      >
-        {/* Auf Handy und Tablet hält nur die Überschrift rechts Platz
-            für die Figur frei, der Hinweis darunter nutzt die volle Breite. */}
-        <div className={mitFigur ? "pr-[34%] sm:pr-[38%] lg:pr-0" : ""}>
-          <H2>So läuft ein Einsatz bei uns ab</H2>
-          <p
-            {...reveal(80)}
-            className="mt-4 text-[1.05rem] leading-relaxed text-ink-soft"
-          >
-            Sechs Schritte, und keiner davon enthält eine Überraschung.
-          </p>
-        </div>
-        {mitFigur && hinweis}
+      <div className="max-w-[46ch]">
+        <H2>So läuft ein Einsatz bei uns ab</H2>
+        <p
+          {...reveal(80)}
+          className="mt-4 text-[1.05rem] leading-relaxed text-ink-soft"
+        >
+          Sechs Schritte, und keiner davon enthält eine Überraschung.
+        </p>
       </div>
 
       <ol className="mt-10 grid gap-x-10 gap-y-8 sm:grid-cols-2 lg:grid-cols-3">
@@ -242,7 +215,14 @@ export function Ablauf({ mitFigur = false }: { mitFigur?: boolean }) {
         ))}
       </ol>
 
-      {!mitFigur && hinweis}
+      <p
+        {...reveal(150)}
+        className="mt-10 max-w-[64ch] border-l-2 border-brand pl-5 text-[0.98rem] leading-relaxed text-ink"
+      >
+        Wenn ein Kind, ein Tier oder eine hilfebedürftige Person hinter der Tür
+        ist oder der Herd läuft, sagen Sie uns das bitte im ersten Satz. Solche
+        Einsätze ziehen wir vor.
+      </p>
     </Container>
   );
 }

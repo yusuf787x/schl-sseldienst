@@ -15,11 +15,11 @@ Quelle stehen trotzdem in `public/img/BILDNACHWEIS.json`.
 | `einbruchschutz.jpg` | Leistung Einbruchschutz | Mehrfachverriegelung im Türblatt |
 | `tuer-reparatur.jpg` | Leistung Einbruchschaden | Türband wird verschraubt |
 | `schliessanlage.jpg` | Leistung Schließanlagen | Schlüsselschrank |
-| `figur-schluessel.png` | Startseite, hängt am Notfallband | Freisteller aus `tueroeffnung.jpg` |
-| `figur-akkuschrauber.png` | Startseite, Abschnitt Ablauf | Freisteller aus `tuer-reparatur.jpg` |
 
 `tueroeffnung.jpg` ist außerdem das Hero-Bild der Startseite,
 `notdienst-nacht.jpg` das Bild im Notfallband auf allen Seiten.
+Einsatzfahrzeug und Schlüsselbund auf der Startseite sind keine Fotos,
+sondern gezeichnete SVG-Illustrationen in `src/components/illustrationen.tsx`.
 
 Die Auswahl ist farblich auf die Palette abgestimmt: alle sieben im warmen bis
 neutralen Bereich (Farbton 14 bis 42, Sättigung unter 30). Deshalb wirken sie

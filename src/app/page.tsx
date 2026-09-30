@@ -6,6 +6,7 @@ import { site, euro } from "@/content/site";
 import { ratgeber } from "@/content/ratgeber";
 import { Container, Section, H2, H3, CallButton, LinkButton, reveal } from "@/components/ui";
 import { Welle, Siegel, Figur } from "@/components/deko";
+import { Einsatzwagen, Schluesselbund } from "@/components/illustrationen";
 import {
   LeistungsGrid,
   Preistafel,
@@ -225,7 +226,11 @@ export default function Startseite() {
       </Section>
 
       {/* ── Preise ─────────────────────────────────────────── */}
-      <Section tone="surface" id="preise">
+      <Section
+        tone="surface"
+        id="preise"
+        className="pb-36 sm:pb-44 lg:pb-52"
+      >
         <Container>
           <div className="max-w-[52ch]">
             <H2>Was es kostet, und warum nicht weniger</H2>
@@ -280,18 +285,16 @@ export default function Startseite() {
       </Section>
 
       {/* ── Ablauf ─────────────────────────────────────────── */}
-      {/* Die Hand mit dem Akkuschrauber greift vom rechten Rand ins
-          Bild und überlappt die Grenze zum Preisabschnitt darüber. */}
+      {/* Das Einsatzfahrzeug steht mit den Rädern auf der Kante zum
+          Preisabschnitt und rollt beim Scrollen von rechts herein. */}
       <Section className="relative">
         <Figur
-          src="/img/figur-akkuschrauber.png"
-          width={900}
-          height={1001}
-          sizes="(min-width: 1024px) 400px, 190px"
-          faktor={-0.1}
-          className="-right-3 -top-14 w-[46vw] max-w-[190px] sm:-top-16 sm:max-w-[260px] lg:-right-2 lg:-top-20 lg:w-[30vw] lg:max-w-[400px]"
-        />
-        <Ablauf mitFigur />
+          faktorX={0.18}
+          className="-right-10 top-0 w-[230px] -translate-y-[98%] sm:w-[300px] lg:-right-8 lg:w-[380px]"
+        >
+          <Einsatzwagen />
+        </Figur>
+        <Ablauf />
       </Section>
 
       {/* ── Notfallband ────────────────────────────────────── */}
@@ -301,14 +304,11 @@ export default function Startseite() {
       <Section tone="surface" className="relative pt-28 sm:pt-32 lg:pt-28">
         {/* Schlüsselbund hängt am Bildband darüber und pendelt leicht. */}
         <Figur
-          src="/img/figur-schluessel.png"
-          width={331}
-          height={903}
-          sizes="90px"
           faktor={-0.06}
           className="right-5 top-0 w-[52px] -translate-y-[42%] sm:right-10 sm:w-[64px] xl:right-[max(2rem,calc((100vw-76rem)/2-4.5rem))] xl:w-[78px]"
-          bildClass="schwingen"
-        />
+        >
+          <Schluesselbund className="schwingen drop-shadow-[0_10px_14px_rgba(0,0,0,0.18)]" />
+        </Figur>
         <Vertrauen />
       </Section>
 

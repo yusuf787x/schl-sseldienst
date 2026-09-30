@@ -1,8 +1,8 @@
-import Image from "next/image";
+import type { ReactNode } from "react";
 
 /* ───────────────────────────────────────────────────────────────
    Gestaltungselemente, die Abschnitte ineinander übergehen lassen:
-   geschichtete Wellen statt harter Kanten, Freisteller, die über
+   geschichtete Wellen statt harter Kanten, Illustrationen, die über
    Abschnittsgrenzen ragen, und das Festpreis-Siegel.
    ─────────────────────────────────────────────────────────────── */
 
@@ -131,41 +131,33 @@ export function Siegel({
 }
 
 /**
- * Freigestelltes Foto, das über Abschnittsgrenzen hinausragt.
- * Rein dekorativ: leerer Alt-Text, für Screenreader unsichtbar.
- * `faktor` steuert die Parallaxe, negativ heißt schneller als die Seite.
+ * Illustration, die über Abschnittsgrenzen hinausragt.
+ * Rein dekorativ und für Screenreader unsichtbar.
+ * `faktor` steuert die vertikale Parallaxe (negativ heißt schneller als
+ * die Seite), `faktorX` eine seitliche Bewegung beim Scrollen.
  */
 export function Figur({
-  src,
-  width,
-  height,
-  sizes,
-  faktor = -0.08,
+  children,
+  faktor = 0,
+  faktorX = 0,
   className = "",
-  bildClass = "",
 }: {
-  src: string;
-  width: number;
-  height: number;
-  sizes: string;
+  children: ReactNode;
   faktor?: number;
+  faktorX?: number;
   className?: string;
-  bildClass?: string;
 }) {
   return (
     <div
       aria-hidden="true"
       className={`pointer-events-none absolute z-20 ${className}`}
     >
-      <div data-parallax={faktor} className="parallax">
-        <Image
-          src={src}
-          alt=""
-          width={width}
-          height={height}
-          sizes={sizes}
-          className={`h-auto w-full drop-shadow-[0_22px_28px_rgba(0,0,0,0.3)] ${bildClass}`}
-        />
+      <div
+        data-parallax={faktor || undefined}
+        data-parallax-x={faktorX || undefined}
+        className="parallax"
+      >
+        {children}
       </div>
     </div>
   );

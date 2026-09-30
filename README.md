@@ -93,7 +93,7 @@ kein GSAP und kein Motion-Bundle, sondern gut 1 KB eigener Code:
   Helfer für Komponenten: `reveal(verzoegerung, art)` aus `ui.tsx`.
 - `components/deko.tsx` enthält die Gestaltungselemente: `Welle`
   (geschichtete Übergänge statt harter Abschnittskanten), `Figur`
-  (Freisteller, die über Abschnittsgrenzen ragen) und das `Siegel`.
+  (Illustrationen, die über Abschnittsgrenzen ragen) und das `Siegel`.
 - Der Hero animiert rein per CSS. Die Telefonnummer wartet nie auf JavaScript.
 - Ohne JavaScript oder bei „Bewegung reduzieren" im System ist alles sofort
   sichtbar und nichts bewegt sich.
@@ -187,9 +187,9 @@ bis neutralen Bereich (Farbton 14 bis 42, Sättigung unter 30). Deshalb wirken
 sie als Satz und nicht wie zusammengesuchte Stockfotos. Wer Bilder austauscht,
 sollte diesen Rahmen einhalten, sonst fällt das neue Bild sofort heraus.
 
-Die beiden Freisteller `figur-schluessel.png` und `figur-akkuschrauber.png`
-sind aus `tueroeffnung.jpg` und `tuer-reparatur.jpg` ausgeschnitten, also
-dieselbe Lizenz.
+Einsatzfahrzeug und Schlüsselbund auf der Startseite sind keine Fotos, sondern
+eigene SVG-Illustrationen in `src/components/illustrationen.tsx`. Sie ziehen
+ihre Farben aus den Tokens und gehen im Dunkelmodus mit.
 
 Neue Bilder holen: `PEXELS_API_KEY=… node scripts/fetch-images.mjs`
 (IDs in [scripts/fetch-images.mjs](scripts/fetch-images.mjs) anpassen).

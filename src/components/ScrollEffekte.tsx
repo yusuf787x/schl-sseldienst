@@ -10,7 +10,8 @@ import { usePathname } from "next/navigation";
  *    sobald es in den Sichtbereich kommt. Die eigentliche Bewegung
  *    steht in globals.css.
  * 2. Parallaxe: Elemente mit `data-parallax="0.15"` verschieben sich
- *    beim Scrollen um diesen Faktor gegenüber ihrem Elternelement.
+ *    beim Scrollen um diesen Faktor gegenüber ihrem Elternelement,
+ *    `data-parallax-x` entsprechend seitlich.
  *
  * Ausgeblendet wird nur, wenn das Inline-Script im <head> die Klasse
  * `js` gesetzt hat. Lädt dieses Script nie, bleibt `js` nicht stehen
@@ -50,7 +51,9 @@ export function ScrollEffekte() {
     zeigen.forEach((el) => io.observe(el));
 
     const parallax = Array.from(
-      document.querySelectorAll<HTMLElement>("[data-parallax]"),
+      document.querySelectorAll<HTMLElement>(
+        "[data-parallax], [data-parallax-x]",
+      ),
     );
     let frame = 0;
     const rechnen = () => {
@@ -61,9 +64,11 @@ export function ScrollEffekte() {
         // selbst, sonst schaukelt sich die Verschiebung auf.
         const r = (el.parentElement ?? el).getBoundingClientRect();
         if (r.bottom < -200 || r.top > vh + 200) continue;
-        const faktor = Number(el.dataset.parallax) || 0.1;
         const abstand = r.top + r.height / 2 - vh / 2;
-        el.style.setProperty("--py", `${(-abstand * faktor).toFixed(1)}px`);
+        const fy = Number(el.dataset.parallax) || 0;
+        const fx = Number(el.dataset.parallaxX) || 0;
+        if (fy) el.style.setProperty("--py", `${(-abstand * fy).toFixed(1)}px`);
+        if (fx) el.style.setProperty("--px", `${(abstand * fx).toFixed(1)}px`);
       }
     };
     const planen = () => {
