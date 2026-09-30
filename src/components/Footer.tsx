@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { MapPin, Phone, EnvelopeSimple, Clock } from "@phosphor-icons/react/ssr";
 import { Logo } from "./Logo";
+import { Welle } from "./deko";
 import { site, telHref } from "@/content/site";
 import { leistungen } from "@/content/leistungen";
 import { ratgeber } from "@/content/ratgeber";
@@ -17,9 +18,9 @@ import { ortsteile, nachbarstaedte } from "@/content/orte";
  */
 export function Einsatzgebiet() {
   return (
-    <section className="border-t border-line bg-sunk py-12 sm:py-16">
+    <section className="relative bg-sunk pb-24 pt-12 sm:pb-32 sm:pt-16">
       <div className="mx-auto w-full max-w-[76rem] px-5 sm:px-8">
-        <h2 className="head text-[1.25rem] sm:text-[1.5rem]">
+        <h2 data-reveal="" className="head text-[1.25rem] sm:text-[1.5rem]">
           Unser Einsatzgebiet im Kreis Lippe
         </h2>
         <p className="mt-3 max-w-[70ch] text-[0.95rem] leading-relaxed text-ink-soft">
@@ -66,18 +67,19 @@ export function Einsatzgebiet() {
           </div>
         </div>
       </div>
+
+      {/* Weicher Übergang in den Footer, geschichtet statt harter Kante. */}
+      <Welle ton="brand" form="tal" />
     </section>
   );
 }
 
 export function Footer() {
-  const jahr = new Date().getFullYear();
-
   return (
     <footer className="bg-brand text-on-brand">
       <div className="mx-auto w-full max-w-[76rem] px-5 py-14 sm:px-8 sm:py-16">
-        <div className="grid gap-10 lg:grid-cols-[1.4fr_1fr_1fr_1fr]">
-          <div>
+        <div className="grid grid-cols-2 gap-x-6 gap-y-10 lg:grid-cols-[1.4fr_1fr_1fr_1fr]">
+          <div className="col-span-2 lg:col-span-1">
             <div className="text-on-brand">
               <Logo withClaim />
             </div>
@@ -145,14 +147,6 @@ export function Footer() {
             <FooterLink href="/impressum">Impressum</FooterLink>
             <FooterLink href="/datenschutz">Datenschutz</FooterLink>
           </FooterSpalte>
-        </div>
-
-        <div className="mt-12 flex flex-col gap-3 border-t border-on-brand/20 pt-6 text-[0.8rem] opacity-70 sm:flex-row sm:items-center sm:justify-between">
-          <p>
-            {jahr} {site.brand.name}, {site.brand.legalName}, {site.contact.zip}{" "}
-            {site.contact.city}
-          </p>
-          <p>Handwerksrolle {site.legal.handwerksrolle}</p>
         </div>
       </div>
     </footer>

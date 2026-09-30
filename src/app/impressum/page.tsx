@@ -34,8 +34,6 @@ export default function Impressum() {
               <p>
                 {site.brand.legalName}
                 <br />
-                Motorenfachmann
-                <br />
                 {site.contact.street}
                 <br />
                 {site.contact.zip} {site.contact.city}

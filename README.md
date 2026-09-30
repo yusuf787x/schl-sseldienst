@@ -84,10 +84,23 @@ was tatsächlich passiert, statt zwölf Dienste aufzuzählen, die nicht da sind.
 > dazukommt, **muss** die Datenschutzerklärung ergänzt werden, und bei Analytics
 > und Maps kommt ein Consent-Banner dazu.
 
-**Motion bewusst niedrig.**
-Wer nachts um zwei ausgesperrt ist, braucht keine Scrollanimation, sondern in zwei
-Sekunden die Telefonnummer. Deshalb kein GSAP, kein Motion-Bundle: kürzere
-Ladezeit im Mobilfunknetz, und genau dort wird diese Seite aufgerufen.
+**Bewegung ja, Animationsbibliothek nein.**
+Die Seite soll lebendig wirken, ohne auf dem Handy langsam zu werden. Deshalb
+kein GSAP und kein Motion-Bundle, sondern gut 1 KB eigener Code:
+
+- `components/ScrollEffekte.tsx` blendet alles mit `data-reveal` beim
+  Hineinscrollen ein und bewegt Elemente mit `data-parallax` leicht mit.
+  Helfer für Komponenten: `reveal(verzoegerung, art)` aus `ui.tsx`.
+- `components/deko.tsx` enthält die Gestaltungselemente: `Welle`
+  (geschichtete Übergänge statt harter Abschnittskanten), `Figur`
+  (Freisteller, die über Abschnittsgrenzen ragen) und das `Siegel`.
+- Der Hero animiert rein per CSS. Die Telefonnummer wartet nie auf JavaScript.
+- Ohne JavaScript oder bei „Bewegung reduzieren" im System ist alles sofort
+  sichtbar und nichts bewegt sich.
+
+Das Notfallband (`NotfallBand` in `blocks.tsx`) ist ein Bild, an dem die Seite
+vorbeiscrollt. Es nimmt die Farben der Nachbarabschnitte über `oben`/`unten`
+entgegen, damit die Wellen passen.
 
 ---
 
@@ -173,6 +186,10 @@ Die Auswahl ist auf die Palette abgestimmt: Alle sieben Bilder liegen im warmen
 bis neutralen Bereich (Farbton 14 bis 42, Sättigung unter 30). Deshalb wirken
 sie als Satz und nicht wie zusammengesuchte Stockfotos. Wer Bilder austauscht,
 sollte diesen Rahmen einhalten, sonst fällt das neue Bild sofort heraus.
+
+Die beiden Freisteller `figur-schluessel.png` und `figur-akkuschrauber.png`
+sind aus `tueroeffnung.jpg` und `tuer-reparatur.jpg` ausgeschnitten, also
+dieselbe Lizenz.
 
 Neue Bilder holen: `PEXELS_API_KEY=… node scripts/fetch-images.mjs`
 (IDs in [scripts/fetch-images.mjs](scripts/fetch-images.mjs) anpassen).

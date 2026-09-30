@@ -12,7 +12,8 @@ import {
 } from "@phosphor-icons/react/ssr";
 import { site, euro } from "@/content/site";
 import { leistungen, type Leistung } from "@/content/leistungen";
-import { Container, H2, H3, CallButton } from "./ui";
+import { Container, H2, H3, CallButton, reveal } from "./ui";
+import { Welle, type Ton } from "./deko";
 
 /* ── Icons ──────────────────────────────────────────────────── */
 
@@ -46,7 +47,7 @@ export function Faq({
   return (
     <div>
       <H2>{titel}</H2>
-      <div className="mt-7 border-t border-line">
+      <div {...reveal(100)} className="mt-7 border-t border-line">
         {items.map((f) => (
           <details key={f.frage} className="group border-b border-line">
             <summary className="flex cursor-pointer list-none items-start justify-between gap-4 py-4 text-left font-semibold marker:content-none">
@@ -81,6 +82,7 @@ export function Preistafel({ kompakt = false }: { kompakt?: boolean }) {
           betrag={euro(nacht)}
           titel="Türöffnung nachts und sonntags"
           zeit={`Außerhalb ${tagVon} bis ${tagBis} Uhr, sonn- und feiertags`}
+          verzoegerung={120}
         />
       </div>
 
@@ -115,14 +117,17 @@ function Preiskarte({
   titel,
   zeit,
   hervor = false,
+  verzoegerung = 0,
 }: {
   betrag: string;
   titel: string;
   zeit: string;
   hervor?: boolean;
+  verzoegerung?: number;
 }) {
   return (
     <div
+      {...reveal(verzoegerung, "zoom")}
       className={`rounded-panel border p-6 ${
         hervor
           ? "border-brand bg-brand text-on-brand"
@@ -179,19 +184,53 @@ const schritte = [
   },
 ];
 
-export function Ablauf() {
+/**
+ * `mitFigur`: Auf der Startseite ragt rechts oben eine Hand mit
+ * Akkuschrauber ins Bild. Der Kopfbereich hält dann rechts Platz frei
+ * und nimmt den Notfallhinweis mit nach oben, damit nichts überlappt.
+ */
+export function Ablauf({ mitFigur = false }: { mitFigur?: boolean }) {
+  const hinweis = (
+    <p
+      {...reveal(150)}
+      className={`max-w-[64ch] border-l-2 border-brand pl-5 text-[0.98rem] leading-relaxed text-ink ${
+        mitFigur ? "mt-6" : "mt-10"
+      }`}
+    >
+      Wenn ein Kind, ein Tier oder eine hilfebedürftige Person hinter der Tür
+      ist oder der Herd läuft, sagen Sie uns das bitte im ersten Satz. Solche
+      Einsätze ziehen wir vor.
+    </p>
+  );
+
   return (
     <Container>
-      <div className="max-w-[46ch]">
-        <H2>So läuft ein Einsatz bei uns ab</H2>
-        <p className="mt-4 text-[1.05rem] leading-relaxed text-ink-soft">
-          Sechs Schritte, und keiner davon enthält eine Überraschung.
-        </p>
+      <div
+        className={
+          mitFigur ? "lg:min-h-[19rem] lg:max-w-[52ch]" : "max-w-[46ch]"
+        }
+      >
+        {/* Auf Handy und Tablet hält nur die Überschrift rechts Platz
+            für die Figur frei, der Hinweis darunter nutzt die volle Breite. */}
+        <div className={mitFigur ? "pr-[34%] sm:pr-[38%] lg:pr-0" : ""}>
+          <H2>So läuft ein Einsatz bei uns ab</H2>
+          <p
+            {...reveal(80)}
+            className="mt-4 text-[1.05rem] leading-relaxed text-ink-soft"
+          >
+            Sechs Schritte, und keiner davon enthält eine Überraschung.
+          </p>
+        </div>
+        {mitFigur && hinweis}
       </div>
 
       <ol className="mt-10 grid gap-x-10 gap-y-8 sm:grid-cols-2 lg:grid-cols-3">
         {schritte.map((s, i) => (
-          <li key={s.titel} className="border-t-2 border-brand pt-4">
+          <li
+            key={s.titel}
+            {...reveal((i % 3) * 90)}
+            className="border-t-2 border-brand pt-4"
+          >
             <p className="tnum text-[0.78rem] font-bold text-brand">
               {String(i + 1).padStart(2, "0")}
             </p>
@@ -203,11 +242,7 @@ export function Ablauf() {
         ))}
       </ol>
 
-      <p className="mt-10 max-w-[64ch] border-l-2 border-brand pl-5 text-[0.98rem] leading-relaxed text-ink">
-        Wenn ein Kind, ein Tier oder eine hilfebedürftige Person hinter der Tür
-        ist oder der Herd läuft, sagen Sie uns das bitte im ersten Satz. Solche
-        Einsätze ziehen wir vor.
-      </p>
+      {!mitFigur && hinweis}
     </Container>
   );
 }
@@ -219,26 +254,29 @@ export function LeistungsGrid() {
     <Container>
       <div className="max-w-[48ch]">
         <H2>Was wir machen</H2>
-        <p className="mt-4 text-[1.05rem] leading-relaxed text-ink-soft">
+        <p {...reveal(80)} className="mt-4 text-[1.05rem] leading-relaxed text-ink-soft">
           Vom nächtlichen Notfall bis zur Schließanlage, die Sie in Ruhe planen.
         </p>
       </div>
 
-      <div className="mt-10 grid gap-px overflow-hidden rounded-panel border border-line bg-line sm:grid-cols-2 lg:grid-cols-3">
-        {leistungen.map((l) => (
+      <div className="mt-8 grid gap-4 sm:mt-10 sm:grid-cols-2 sm:gap-5 lg:grid-cols-3">
+        {leistungen.map((l, i) => (
           <Link
             key={l.slug}
             href={`/leistungen/${l.slug}`}
-            className="group flex flex-col bg-surface transition-colors hover:bg-brand-tint"
+            {...reveal((i % 3) * 90)}
+            className="group flex flex-col overflow-hidden rounded-panel border border-line bg-surface transition-[border-color,box-shadow] duration-300 hover:border-brand hover:shadow-[0_24px_48px_-28px_rgba(22,33,31,0.45)]"
           >
-            <Image
-              src={`/img/${l.bild.datei}`}
-              alt={l.bild.alt}
-              width={1200}
-              height={800}
-              sizes="(min-width: 1024px) 30vw, (min-width: 640px) 50vw, 100vw"
-              className="aspect-[16/10] w-full object-cover"
-            />
+            <div className="overflow-hidden">
+              <Image
+                src={`/img/${l.bild.datei}`}
+                alt={l.bild.alt}
+                width={1200}
+                height={800}
+                sizes="(min-width: 1024px) 30vw, (min-width: 640px) 50vw, 100vw"
+                className="aspect-[16/10] w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+              />
+            </div>
             <div className="flex flex-1 flex-col p-6 sm:p-7">
             <span className="text-brand">
               <LeistungsIcon name={l.icon} className="size-7" />
@@ -261,28 +299,68 @@ export function LeistungsGrid() {
 
 /* ── Notfall-Aufruf ─────────────────────────────────────────── */
 
+/**
+ * Bildband, an dem die Seite vorbeiscrollt: Das Foto steht fest im
+ * Fenster, der Abschnitt schneidet nur einen Ausschnitt heraus
+ * (clip-path + position: fixed, funktioniert auch auf dem iPhone, wo
+ * background-attachment: fixed ignoriert wird).
+ *
+ * `oben` und `unten` sind die Farben der Nachbarabschnitte. Deren
+ * Wellen legen sich über das Foto, so gibt es keine harte Kante.
+ */
 export function NotfallBand({
   ort,
+  oben = "bg",
+  unten = "surface",
 }: {
   ort?: string;
+  oben?: Ton;
+  unten?: Ton;
 }) {
   return (
-    <div className="bg-brand py-12 text-on-brand sm:py-14">
-      <Container>
-        <div className="flex flex-col items-start gap-6 md:flex-row md:items-center md:justify-between">
-          <div>
-            <p className="head text-[1.4rem] sm:text-[1.65rem]">
+    <section className="relative isolate text-[#faf7f0]">
+      {/* Der Ausschnitt endet 3px vor den Kanten, die Wellen decken den
+          Rand ab. Sonst blitzt beim Beschnitt eine Haarlinie durch. */}
+      <div
+        aria-hidden="true"
+        className="absolute inset-x-0 inset-y-[3px] -z-10 overflow-hidden [clip-path:inset(0)]"
+      >
+        <div className="fixed inset-0">
+          <Image
+            src="/img/notdienst-nacht.jpg"
+            alt=""
+            fill
+            sizes="100vw"
+            className="object-cover object-[60%_50%]"
+          />
+          <div className="absolute inset-0 bg-[#0a1110]/70" />
+        </div>
+      </div>
+
+      <Welle ton={oben} seite="oben" />
+
+      <Container className="relative z-[2] py-24 sm:py-32 lg:py-36">
+        <div className="flex flex-col items-stretch gap-7 md:flex-row md:items-center md:justify-between">
+          <div {...reveal(0, "links")}>
+            <p className="text-[0.75rem] font-semibold uppercase tracking-[0.16em] text-[#8fd3cb]">
+              Rund um die Uhr erreichbar
+            </p>
+            <p className="head mt-3 text-[1.55rem] sm:text-[2rem] lg:text-[2.3rem]">
               Ausgesperrt{ort ? ` in ${ort}` : ""}? Rufen Sie an.
             </p>
-            <p className="mt-2 max-w-[52ch] text-[0.98rem] opacity-80">
-              Rund um die Uhr erreichbar. Sie erfahren den Preis, bevor wir
-              losfahren.
+            <p className="mt-3 max-w-[48ch] text-[1rem] text-white/80 sm:text-[1.05rem]">
+              Sie erfahren den Festpreis, bevor wir losfahren. Keine
+              versteckten Kosten, auch nachts nicht.
             </p>
           </div>
-          <CallButton size="xl" variant="onBrand" className="shrink-0" />
+          <div {...reveal(150, "rechts")} className="shrink-0">
+            <CallButton size="xl" variant="hell" className="w-full md:w-auto" />
+          </div>
         </div>
       </Container>
-    </div>
+
+      <Welle ton={unten} />
+    </section>
   );
 }
 
@@ -313,7 +391,7 @@ export function Vertrauen() {
       <div className="grid items-start gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:gap-16">
         <div>
           <H2>Woran Sie erkennen, dass wir echt sind</H2>
-          <div className="prose-lippe mt-5">
+          <div {...reveal(80)} className="prose-lippe mt-5">
             <p>
               Die Suche nach einem Schlüsseldienst führt in Lage fast nur zu
               bundesweiten Vermittlungsportalen, die mit 19 oder 29 € werben.
@@ -331,19 +409,35 @@ export function Vertrauen() {
               von echter Handarbeit: Es zeigt, dass hinter der Nummer ein
               Betrieb steht. Sobald ein Foto vom eigenen Fahrzeug da ist,
               gehört es an genau diese Stelle, siehe BILDBEDARF.md. */}
-          <Image
-            src="/img/werkstatt-schluessel.jpg"
-            alt="Hände an einer Schlüsselfräsmaschine, daneben liegt Werkzeug"
-            width={1200}
-            height={800}
-            sizes="(min-width: 1024px) 44vw, 100vw"
-            className="mt-8 aspect-[16/10] w-full rounded-panel object-cover"
-          />
+          {/* Versetzte Farbfläche hinter dem Foto, das Foto selbst
+              gleitet beim Scrollen leicht nach. */}
+          <div {...reveal(0, "zoom")} className="relative mt-8 mr-3 sm:mr-5">
+            <div
+              aria-hidden="true"
+              className="absolute -bottom-3 -right-3 left-8 top-8 rounded-panel bg-brand sm:-bottom-5 sm:-right-5"
+            />
+            <div className="relative overflow-hidden rounded-panel">
+              <div data-parallax="0.06" className="parallax -my-6">
+                <Image
+                  src="/img/werkstatt-schluessel.jpg"
+                  alt="Hände an einer Schlüsselfräsmaschine, daneben liegt Werkzeug"
+                  width={1200}
+                  height={800}
+                  sizes="(min-width: 1024px) 44vw, 100vw"
+                  className="aspect-[16/11] w-full object-cover"
+                />
+              </div>
+            </div>
+          </div>
         </div>
 
-        <ul className="grid gap-px overflow-hidden rounded-panel border border-line bg-line sm:grid-cols-2">
-          {punkte.map((p) => (
-            <li key={p.titel} className="bg-surface p-6">
+        <ul className="grid gap-4 sm:grid-cols-2">
+          {punkte.map((p, i) => (
+            <li
+              key={p.titel}
+              {...reveal((i % 2) * 100 + Math.floor(i / 2) * 80)}
+              className="rounded-panel border border-line bg-bg p-6 border-t-2 border-t-brand"
+            >
               <H3 className="text-[1.02rem]">{p.titel}</H3>
               <p className="mt-2 text-[0.9rem] leading-relaxed text-ink-soft">
                 {p.text}
