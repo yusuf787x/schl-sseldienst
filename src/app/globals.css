@@ -1,0 +1,189 @@
+@import "tailwindcss";
+
+/* ───────────────────────────────────────────────────────────────
+   Farbsystem
+
+   Alles stammt aus dem Logo: Petrol #255A58 auf Creme #FAF7F0.
+   Genau EINE Akzentfarbe (Petrol). Hierarchie entsteht über Fläche
+   und Größe, nicht über eine zweite Signalfarbe.
+
+   Die Neutraltöne sind warm abgeleitet, damit sie mit dem Creme
+   zusammenpassen. Kühles Grau würde den Cremeton schmutzig wirken
+   lassen.
+   ─────────────────────────────────────────────────────────────── */
+
+@theme {
+  --color-bg: #faf7f0;
+  --color-surface: #fffdf8;
+  --color-sunk: #f3eee3;
+  --color-ink: #16211f;
+  --color-ink-soft: #4e5c59;
+  --color-ink-mute: #6d7a76;
+  --color-brand: #255a58;
+  --color-brand-deep: #1a403f;
+  --color-brand-tint: #e7efed;
+  --color-on-brand: #faf7f0;
+  --color-line: #e0d9cb;
+  --color-line-strong: #cec4b0;
+
+  /* Beide werden von next/font/local gesetzt, siehe app/layout.tsx. */
+  --font-sans: var(--font-body), ui-sans-serif, system-ui, -apple-system,
+    "Segoe UI", Roboto, sans-serif;
+  --font-display: var(--font-head), ui-sans-serif, system-ui, sans-serif;
+
+  /* Eine Radius-Regel für die ganze Seite:
+     Buttons und Eingaben 6px, Flächen und Bilder 12px. Keine Pillen. */
+  --radius-ctl: 6px;
+  --radius-panel: 12px;
+
+  --breakpoint-sm: 40rem;
+  --breakpoint-md: 48rem;
+  --breakpoint-lg: 64rem;
+  --breakpoint-xl: 80rem;
+}
+
+/* Dark Mode überschreibt die Custom Properties direkt auf :root.
+   Wichtig: NICHT über ein zweites @theme in einer Media Query.
+   Tailwind v4 hebt @theme-Blöcke aus Media Queries heraus, dann
+   gewinnen die Dark-Werte immer und die Seite ist nie hell. */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-bg: #101917;
+    --color-surface: #17221f;
+    --color-sunk: #0b1211;
+    --color-ink: #f2efe7;
+    --color-ink-soft: #aebab6;
+    --color-ink-mute: #8b9793;
+    --color-brand: #63afa8;
+    --color-brand-deep: #86c6bf;
+    --color-brand-tint: #1c2e2b;
+    --color-on-brand: #0c1413;
+    --color-line: #283734;
+    --color-line-strong: #384a46;
+  }
+}
+
+/* ─────────────────────────────────────────────────────────────── */
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+body {
+  background-color: var(--color-bg);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  font-synthesis-weight: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection {
+  background-color: var(--color-brand);
+  color: var(--color-on-brand);
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-brand);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+/* ───────────────────────────────────────────────────────────────
+   Überschriftenschrift
+
+   Eine einzige Regel für den gesamten Überschriftensatz. Alles, was
+   nach Akira aussehen soll, trägt `.head`.
+
+   ▸ TAUSCH AUF ECHTES AKIRA EXPANDED (sobald lizenziert):
+     1. Akira-Datei nach src/fonts/ legen
+     2. in app/layout.tsx den `head`-localFont darauf zeigen lassen und
+        die Zeile `declarations: [{ prop: "font-stretch" … }]` entfernen
+     3. hier unten `font-stretch` und `font-weight` löschen, Akira hat
+        weder Breiten- noch Gewichtsachse
+   Sonst ändert sich nichts, keine Komponente kennt den Schriftnamen.
+   ─────────────────────────────────────────────────────────────── */
+.head {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-stretch: 112%;
+  letter-spacing: -0.012em;
+  line-height: 1.05;
+}
+
+/* Für die ganz großen Zahlen: noch breiter und schwerer, das trägt
+   die Preisflächen. */
+.head-zahl {
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-stretch: 122%;
+  letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Preise und Telefonnummern laufen sonst optisch auseinander. */
+.tnum {
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum";
+}
+
+/* Feine, zum Untergrund getönte Trennlinie statt schwarzem Schatten. */
+.hairline {
+  border-color: var(--color-line);
+}
+
+/* Fließtext in Ratgeber und Leistungsseiten. */
+.prose-lippe p {
+  max-width: 68ch;
+  line-height: 1.7;
+  color: var(--color-ink-soft);
+}
+.prose-lippe p + p {
+  margin-top: 1rem;
+}
+.prose-lippe strong {
+  color: var(--color-ink);
+  font-weight: 600;
+}
+.prose-lippe a {
+  color: var(--color-brand);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-thickness: 1px;
+}
+.prose-lippe a:hover {
+  color: var(--color-brand-deep);
+  text-decoration-thickness: 2px;
+}
+
+/* Eintritts-Animation, bewusst dezent: MOTION_INTENSITY 3.
+   Wer um 2 Uhr nachts ausgesperrt ist, braucht keine Choreografie. */
+@media (prefers-reduced-motion: no-preference) {
+  .rise {
+    animation: rise 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+  @keyframes rise {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+}

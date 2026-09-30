@@ -1,0 +1,79 @@
+[
+  {
+    "datei": "werkstatt-schluessel.jpg",
+    "zweck": "Startseite, Abschnitt Vertrauen",
+    "pexelsId": 35287856,
+    "fotograf": "Saad Bin  Hasan",
+    "fotografUrl": "https://www.pexels.com/@saadbinhasan",
+    "seite": "https://www.pexels.com/photo/close-up-of-a-locksmith-working-with-tools-35287856/",
+    "alt": "Close-up image of locksmith tools and hands working with a key machine outdoors.",
+    "durchschnittsfarbe": "#746256",
+    "kb": 185
+  },
+  {
+    "datei": "tueroeffnung.jpg",
+    "zweck": "Leistung Türöffnung",
+    "pexelsId": 12496893,
+    "fotograf": "Alexey Demidov",
+    "fotografUrl": "https://www.pexels.com/@alexeydemidov",
+    "seite": "https://www.pexels.com/photo/a-close-up-shot-of-silver-keys-12496893/",
+    "alt": "Detailed shot of keys hanging in a door lock on a wooden surface, warm tones.",
+    "durchschnittsfarbe": "#8B604F",
+    "kb": 401
+  },
+  {
+    "datei": "notdienst-nacht.jpg",
+    "zweck": "Leistung Schlüsselnotdienst",
+    "pexelsId": 12689692,
+    "fotograf": "Erik Mclean",
+    "fotografUrl": "https://www.pexels.com/@introspectivedsgn",
+    "seite": "https://www.pexels.com/photo/houses-on-empty-city-street-at-night-12689692/",
+    "alt": "A serene empty urban street at night with residential houses and streetlights.",
+    "durchschnittsfarbe": "#5B4842",
+    "kb": 383
+  },
+  {
+    "datei": "schliesszylinder.jpg",
+    "zweck": "Leistung Schloss und Zylinder",
+    "pexelsId": 13963754,
+    "fotograf": "Vladimir Srajber",
+    "fotografUrl": "https://www.pexels.com/@vladimirsrajber",
+    "seite": "https://www.pexels.com/photo/close-up-photograph-of-a-keyhole-13963754/",
+    "alt": "Detailed view of a steel keyhole on a door ensuring security and privacy.",
+    "durchschnittsfarbe": "#777674",
+    "kb": 104
+  },
+  {
+    "datei": "einbruchschutz.jpg",
+    "zweck": "Leistung Einbruchschutz",
+    "pexelsId": 279810,
+    "fotograf": "Pixabay",
+    "fotografUrl": "https://www.pexels.com/@pixabay",
+    "seite": "https://www.pexels.com/photo/deadlock-with-key-on-hole-279810/",
+    "alt": "Metal door handle and lock system with key inserted, showcasing security features.",
+    "durchschnittsfarbe": "#827D78",
+    "kb": 335
+  },
+  {
+    "datei": "tuer-reparatur.jpg",
+    "zweck": "Leistung Einbruchschaden",
+    "pexelsId": 5691502,
+    "fotograf": "Ksenia Chernaya",
+    "fotografUrl": "https://www.pexels.com/@kseniachernaya",
+    "seite": "https://www.pexels.com/photo/crop-person-screwing-door-hinge-5691502/",
+    "alt": "Unrecognizable professional male master using cordless screwdriver to install metal hinge on wooden window in light room during repair works",
+    "durchschnittsfarbe": "#9F8F81",
+    "kb": 171
+  },
+  {
+    "datei": "schliessanlage.jpg",
+    "zweck": "Leistung Schließanlagen",
+    "pexelsId": 29372699,
+    "fotograf": "Jsme  MILA",
+    "fotografUrl": "https://www.pexels.com/@jsme-mila-523821574",
+    "seite": "https://www.pexels.com/photo/man-organizing-keys-in-office-key-cabinet-29372699/",
+    "alt": "A man arranges keys in a wall-mounted cabinet inside an office setting.",
+    "durchschnittsfarbe": "#837F76",
+    "kb": 151
+  }
+]
